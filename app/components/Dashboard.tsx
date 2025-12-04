@@ -46,7 +46,7 @@ export default function Dashboard({ user, handleLogout }: DashboardProps) {
         id: '1',
         name: 'Compte courant',
         type: 'courant',
-        balance: 14025010.21,
+        balance: 1425010.21,
         currency: '€'
       },
       {
