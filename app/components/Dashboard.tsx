@@ -59,9 +59,12 @@ export default function Dashboard({ user, handleLogout }: DashboardProps) {
     ]);
 
     setOperations([
-      { label: 'Virement entrant - Entreprise BUCCI', date: '25 Nov 2024', amount: 25120.09, type: 'credit' },
+      { label: 'Transaction en cours', date: 'Virement...', amount: -50050.66, type: 'debit', status: '' },
+      { label: 'Transaction en cours', date: 'Virement...', amount: -50033.09, type: 'debit', status: '' },
+      { label: 'Transaction en cours ', date: 'Virement...', amount: -50010.02, type: 'debit', status: '' },
+      { label: 'Transaction en cours ', date: 'Virement...', amount: -60018.17, type: 'debit', status: '' },
       { label: 'Virement entrant - Contrat immobilier', date: '20 Nov 2024', amount: 51700.14, type: 'credit' },
-      { label: 'Virement sortant - SUSPENDU', date: '18 Nov 2024', amount: -50050.66, type: 'debit', status: 'suspended' },
+      { label: 'Virement entrant - Entreprise BUCCI', date: '25 Nov 2024', amount: 25120.09, type: 'credit' },
       { label: 'Virement entrant - Investissement', date: '15 Nov 2024', amount: 30775.11, type: 'credit' },
       { label: 'Retrait carte - BLOQUÉ', date: '12 Nov 2024', amount: -503.33, type: 'debit', status: 'blocked' },
     ]);
