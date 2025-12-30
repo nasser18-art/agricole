@@ -59,10 +59,10 @@ export default function Dashboard({ user, handleLogout }: DashboardProps) {
     ]);
 
     setOperations([
-      { label: 'Transaction en cours', date: 'Virement...', amount: -50050.66, type: 'debit', status: '' },
-      { label: 'Transaction en cours', date: 'Virement...', amount: -50033.09, type: 'debit', status: '' },
-      { label: 'Transaction en cours ', date: 'Virement...', amount: -50010.02, type: 'debit', status: '' },
-      { label: 'Transaction en cours ', date: 'Virement...', amount: -60018.17, type: 'debit', status: '' },
+      { label: 'Transaction Suspendu 48 0636 *** *** ', date: 'BLOQUÉ', amount: -50050.66, type: 'debit', status: 'Suspendu' },
+      { label: 'Transaction Suspendu 48 0636 *** ***', date: 'BLOQUÉ', amount: -50033.09, type: 'debit', status: 'Suspendu' },
+      { label: 'Transaction Suspendu 48 0636 *** *** ', date: 'BLOQUÉ', amount: -50010.02, type: 'debit', status: 'Suspendu' },
+      { label: 'Transaction Suspendu 48 0636 *** ***', date: 'BLOQUÉ', amount: -60018.17, type: 'debit', status: 'Suspendu' },
       { label: 'Virement entrant - Contrat immobilier', date: '20 Nov 2024', amount: 51700.14, type: 'credit' },
       { label: 'Virement entrant - Entreprise BUCCI', date: '25 Nov 2024', amount: 25120.09, type: 'credit' },
       { label: 'Virement entrant - Investissement', date: '15 Nov 2024', amount: 30775.11, type: 'credit' },
