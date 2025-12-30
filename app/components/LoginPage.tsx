@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface Credentials {
-  email: string;
+  identifier: string;
   password: string;
 }
 
@@ -12,11 +12,25 @@ interface LoginPageProps {
   onGoToRegister: () => void;
 }
 
+// Base de données simple d'utilisateurs par défaut (pour démo)
+const DEFAULT_USERS = [
+  { identifier: '123456789', email: 'test@bnpparibas.fr', password: 'BNP2024!', fullName: 'BNP Paribas' },
+  { identifier: '987654321', email: 'pro@example.com', password: 'Secure123!', fullName: 'Client Professionnel' },
+  { identifier: '555666777', email: 'demo@bnp.fr', password: 'Demo2024!', fullName: 'Demo User' }
+];
+
 export default function LoginPage({ onLoginSuccess, onGoToRegister }: LoginPageProps) {
-  const [credentials, setCredentials] = useState<Credentials>({ email: '', password: '' });
+  const [credentials, setCredentials] = useState<Credentials>({ identifier: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [validUsers, setValidUsers] = useState<any[]>([]);
+
+  // Charger les utilisateurs depuis localStorage à la première visite
+  useEffect(() => {
+    const storedUsers = JSON.parse(localStorage.getItem('bnp_users') || '[]');
+    setValidUsers([...DEFAULT_USERS, ...storedUsers]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,24 +43,30 @@ export default function LoginPage({ onLoginSuccess, onGoToRegister }: LoginPageP
     setLoading(true);
     setError('');
 
-    if (!credentials.email || !credentials.password) {
+    if (!credentials.identifier || !credentials.password) {
       setError('Veuillez remplir tous les champs');
       setLoading(false);
       return;
     }
 
-    if (!credentials.email.includes('@')) {
-      setError('Email invalide');
-      setLoading(false);
-      return;
-    }
-
     setTimeout(() => {
-      const fullName = credentials.email.split('@')[0].replace(/[._]/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      // Chercher l'utilisateur par identifier et vérifier le mot de passe
+      const user = validUsers.find(u => 
+        u.identifier === credentials.identifier &&
+        u.password === credentials.password
+      );
+
+      if (!user) {
+        setError('Identifiant ou mot de passe incorrect');
+        setLoading(false);
+        return;
+      }
+
+      // Connexion réussie
       onLoginSuccess({
-        email: credentials.email,
-        fullName: fullName,
-        username: credentials.email.split('@')[0]
+        email: user.email,
+        fullName: user.fullName,
+        identifier: user.identifier
       });
       setLoading(false);
     }, 1000);
@@ -453,18 +473,18 @@ export default function LoginPage({ onLoginSuccess, onGoToRegister }: LoginPageP
             {error && <div className="error-message" style={styles.errorMessage}>{error}</div>}
 
             <div className="form-group" style={styles.formGroup}>
-              <label className="form-label" style={styles.formLabel}>Email ou identifiant</label>
+              <label className="form-label" style={styles.formLabel}>Identifiant</label>
               <div className="form-input-wrapper" style={styles.formInputWrapper}>
                 <svg className="form-icon" style={styles.formIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                 </svg>
                 <input
-                  type="email"
-                  name="email"
-                  value={credentials.email}
+                  type="text"
+                  name="identifier"
+                  value={credentials.identifier}
                   onChange={handleChange}
                   className="form-input"
-                  placeholder="votre.email@example.com"
+                  placeholder="votre numéro d'identifiant"
                   disabled={loading}
                   style={styles.formInput}
                 />

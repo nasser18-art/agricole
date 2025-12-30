@@ -12,7 +12,7 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
-    username: '',
+    identifier: '',
     password: '',
     fullName: ''
   });
@@ -33,8 +33,15 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
     setError('');
     setLoading(true);
 
-    if (!formData.email || !formData.username || !formData.password || !formData.fullName) {
+    if (!formData.email || !formData.identifier || !formData.password || !formData.fullName) {
       setError('Veuillez remplir tous les champs');
+      setLoading(false);
+      return;
+    }
+
+    // Vérifier que l'identifiant est numérique
+    if (!/^\d+$/.test(formData.identifier)) {
+      setError('L\'identifiant doit contenir uniquement des chiffres');
       setLoading(false);
       return;
     }
@@ -45,10 +52,28 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
       return;
     }
 
+    // Vérifier si l'identifiant existe déjà
+    const existingUsers = JSON.parse(localStorage.getItem('bnp_users') || '[]');
+    if (existingUsers.some((u: any) => u.identifier === formData.identifier)) {
+      setError('Cet identifiant est déjà utilisé');
+      setLoading(false);
+      return;
+    }
+
     setTimeout(() => {
+      // Sauvegarder le nouvel utilisateur dans localStorage
+      const newUser = {
+        identifier: formData.identifier,
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password
+      };
+      existingUsers.push(newUser);
+      localStorage.setItem('bnp_users', JSON.stringify(existingUsers));
+
       onRegisterSuccess({
         fullName: formData.fullName,
-        username: formData.username,
+        identifier: formData.identifier,
         email: formData.email
       });
       setLoading(false);
@@ -123,15 +148,16 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
             </div>
 
             <div>
-              <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">Identifiant</label>
+              <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">Identifiant (Numérique)</label>
               <div className="relative">
                 <User size={18} className="md:w-5 md:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
-                  value={formData.username}
-                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  inputMode="numeric"
+                  value={formData.identifier}
+                  onChange={(e) => setFormData({ ...formData, identifier: e.target.value.replace(/\D/g, '') })}
                   className="w-full pl-10 md:pl-11 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition outline-none text-sm md:text-base"
-                  placeholder="Choisissez un identifiant"
+                  placeholder="Ex: 123456789"
                 />
               </div>
             </div>
