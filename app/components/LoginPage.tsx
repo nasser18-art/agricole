@@ -23,13 +23,29 @@ export default function LoginPage({
     setError('');
 
     setTimeout(() => {
+      // Vérifier d'abord les utilisateurs créés dans localStorage
+      const savedUsers = JSON.parse(localStorage.getItem('bpm_users') || '[]');
+      const user = savedUsers.find((u: any) => u.identifier === identifier);
+
+      // Si l'utilisateur existe dans localStorage
+      if (user && user.password === password) {
+        onLoginSuccess({ 
+          identifier, 
+          email: user.email,
+          fullName: user.fullName
+        });
+        setLoading(false);
+        return;
+      }
+
+      // Sinon, vérifier les identifiants par défaut
       if (identifier !== '123456789' || password !== 'BPM2024!') {
         setError('Identifiant ou mot de passe incorrect');
         setLoading(false);
         return;
       }
 
-      onLoginSuccess({ identifier });
+      onLoginSuccess({ identifier, email: 'demo@agricole.com', fullName: 'Utilisateur Démo' });
       setLoading(false);
     }, 900);
   };
