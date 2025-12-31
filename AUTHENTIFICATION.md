@@ -1,4 +1,4 @@
-# 🔐 Guide d'Authentification - BNP Paribas Dashboard
+# 🔐 Guide d'Authentification - Banque Populaire du Maroc Dashboard
 
 ## Système d'Authentification
 
@@ -26,9 +26,9 @@ L'application fournit 3 comptes de démonstration :
 
 | Identifiant | Email | Mot de passe | Nom |
 |---|---|---|---|
-| `123456789` | test@bnpparibas.fr | BNP2024! | BNP Paribas |
+| `123456789` | test@bpmaroc.ma | BPM2024! | Banque Populaire du Maroc |
 | `987654321` | pro@example.com | Secure123! | Client Professionnel |
-| `555666777` | demo@bnp.fr | Demo2024! | Demo User |
+| `555666777` | demo@bpmaroc.ma | Demo2024! | Demo User |
 
 ## 💾 Stockage des Données
 

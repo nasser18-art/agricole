@@ -53,7 +53,7 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
     }
 
     // Vérifier si l'identifiant existe déjà
-    const existingUsers = JSON.parse(localStorage.getItem('bnp_users') || '[]');
+    const existingUsers = JSON.parse(localStorage.getItem('bpm_users') || '[]');
     if (existingUsers.some((u: any) => u.identifier === formData.identifier)) {
       setError('Cet identifiant est déjà utilisé');
       setLoading(false);
@@ -69,7 +69,7 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
         password: formData.password
       };
       existingUsers.push(newUser);
-      localStorage.setItem('bnp_users', JSON.stringify(existingUsers));
+      localStorage.setItem('bpm_users', JSON.stringify(existingUsers));
 
       onRegisterSuccess({
         fullName: formData.fullName,
@@ -94,25 +94,25 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-600 via-emerald-500 to-emerald-700 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-700 via-green-600 to-green-800 flex items-center justify-center p-4">
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-400 rounded-full opacity-20"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-800 rounded-full opacity-20"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-green-400 rounded-full opacity-20"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-green-800 rounded-full opacity-20"></div>
       </div>
 
       <div className="relative z-10 w-full max-w-md px-4">
         <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10">
           <div className="flex justify-center mb-6 md:mb-8">
-            <img src="/bnp_logo.webp" alt="BNP Paribas" className="h-12 md:h-16 object-contain" />
+            <img src="/agricole.webp" alt="Banque Agricole" className="h-12 md:h-16 object-contain" />
           </div>
 
           <div className="mb-6 md:mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 text-center">Inscription</h2>
-            <p className="text-sm md:text-base text-gray-600 text-center">Créez votre compte BNP Paribas</p>
+            <p className="text-sm md:text-base text-gray-600 text-center">Créez votre compte Banque Agricole</p>
           </div>
 
           {error && (
-            <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs md:text-sm flex gap-3">
+            <div className="mb-4 md:mb-6 p-3 md:p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl text-xs md:text-sm flex gap-3">
               <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
               <span>{error}</span>
             </div>
@@ -127,7 +127,7 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
                   type="text"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full pl-10 md:pl-11 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition outline-none text-sm md:text-base"
+                  className="w-full pl-10 md:pl-11 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-600 focus:border-green-600 transition outline-none text-sm md:text-base"
                   placeholder="Votre nom complet"
                 />
               </div>
@@ -141,7 +141,7 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full pl-10 md:pl-11 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition outline-none text-sm md:text-base"
+                  className="w-full pl-10 md:pl-11 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-600 focus:border-green-600 transition outline-none text-sm md:text-base"
                   placeholder="votre@email.com"
                 />
               </div>
@@ -156,7 +156,7 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
                   inputMode="numeric"
                   value={formData.identifier}
                   onChange={(e) => setFormData({ ...formData, identifier: e.target.value.replace(/\D/g, '') })}
-                  className="w-full pl-10 md:pl-11 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition outline-none text-sm md:text-base"
+                  className="w-full pl-10 md:pl-11 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-600 focus:border-green-600 transition outline-none text-sm md:text-base"
                   placeholder="Ex: 123456789"
                 />
               </div>
@@ -173,7 +173,7 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
                     setFormData({ ...formData, password: e.target.value });
                     checkPasswordStrength(e.target.value);
                   }}
-                  className="w-full pl-10 md:pl-11 pr-10 md:pr-12 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition outline-none text-sm md:text-base"
+                  className="w-full pl-10 md:pl-11 pr-10 md:pr-12 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-600 focus:border-green-600 transition outline-none text-sm md:text-base"
                   placeholder="Mot de passe sécurisé"
                 />
                 <button
@@ -208,29 +208,29 @@ export default function RegisterPage({ onBackToLogin, onRegisterSuccess }: Regis
             <button
               onClick={handleRegister}
               disabled={loading}
-              className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-2.5 md:py-3.5 rounded-xl font-semibold text-sm md:text-base hover:from-emerald-700 hover:to-emerald-800 transition duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed mt-3 md:mt-4"
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-2.5 md:py-3.5 rounded-xl font-semibold text-sm md:text-base hover:from-green-700 hover:to-green-800 transition duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed mt-3 md:mt-4"
             >
               {loading ? 'Inscription en cours...' : 'S\'inscrire'}
             </button>
           </div>
 
           <p className="mt-3 md:mt-4 text-xs text-gray-500 text-center">
-            En créant un compte, vous acceptez nos <a href="#" className="text-emerald-600 hover:underline">conditions d'utilisation</a>
+            En créant un compte, vous acceptez nos <a href="#" className="text-green-600 hover:underline">conditions d'utilisation</a>
           </p>
 
           <div className="mt-4 md:mt-6 text-center border-t border-gray-200 pt-4 md:pt-6">
             <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3">Vous avez déjà un compte ?</p>
             <button
               onClick={onBackToLogin}
-              className="w-full text-emerald-600 hover:text-emerald-700 font-semibold text-sm md:text-base hover:underline py-2"
+              className="w-full text-green-600 hover:text-green-700 font-semibold text-sm md:text-base hover:underline py-2"
             >
               Se connecter maintenant
             </button>
           </div>
         </div>
 
-        <p className="text-center text-xs md:text-sm text-emerald-100 mt-4 md:mt-6">
-          © 2025 BNP Paribas. Tous droits réservés.
+        <p className="text-center text-xs md:text-sm text-green-100 mt-4 md:mt-6">
+          © 2025 Banque Agricole. Tous droits réservés.
         </p>
       </div>
     </div>
